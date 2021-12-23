@@ -1,4 +1,5 @@
 import pygame
+import colors
 import time
 from pygame.locals import (
     K_UP,
@@ -10,38 +11,40 @@ from pygame.locals import (
     QUIT,
 )
 from pygame.constants import QUIT
+from player import Player
 
-class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
-        super(Player, self).__init__()
-        self.surf = pygame.Surface((50,50))
-        self.surf.fill((255,255,255))
-        self.rect = self.surf.get_rect()
-        
+
 pygame.init()
+
+S_WIDTH = 1350
+S_HEIGHT = 700
+screen = pygame.display.set_mode((1350, 700))
 
 player = Player()
 player.rect.x = 0
 player.rect.y = 0
+        
 
-screen = pygame.display.set_mode((1350, 700))
-
-pygame.display.set_caption("VJ's Game")
-running = True
-
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-
-centerX, centerY = player.rect.center
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def draw():
     screen.fill((0,0,0))
     screen.blit(player.surf, (100,100))
-    centerX, centerY = player.rect.center
 
-    pygame.display.flip()
+
+def main():
+    pygame.display.set_caption("Fighting Game")
+
+    running = True
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill((0,0,0))
+        screen.blit(player.surf, (100,100))
+
+        pygame.display.update()
+
+if __name__ == "__main__":
+    main()
