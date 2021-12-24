@@ -19,14 +19,21 @@ pygame.init()
 
 S_WIDTH = 1350
 S_HEIGHT = 700
+CLOCK = pygame.time.Clock()
+
 screen = pygame.display.set_mode((S_WIDTH, S_HEIGHT))
 
+all_sprites = pygame.sprite.Group()
 player = Player((S_WIDTH, S_HEIGHT), screen, None)
+all_sprites.add(player)
         
 
 def draw():
-    screen.fill((0,0,0))
-    player.draw()
+    screen.fill((0, 0, 0))
+
+    all_sprites.update()
+    all_sprites.draw(screen)
+    pygame.display.update()
 
 def held_key_movement():
     pressed_keys = pygame.key.get_pressed()
@@ -55,11 +62,9 @@ def main():
                     running = False
 
         held_key_movement()
-
-        player.update()
         draw()
 
-        pygame.display.update()
+        CLOCK.tick(60)
 
 if __name__ == "__main__":
     main()

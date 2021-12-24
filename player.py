@@ -1,40 +1,35 @@
 import pygame
+import random
 
+from colors import WHITE
 
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, screen_dimensions, screen, starting_pos):
-        super(Player, self).__init__()
+        super().__init__()
 
+        # Could be replaced with image drawing
         self.width, self.height = (50, 50)
-        self.surf = pygame.Surface((self.width, self.height))
-        self.screen = screen
-        self.screen_width, self.screen_height = screen_dimensions
+        self.image = pygame.Surface((self.width, self.height))
+        self.image.fill(WHITE)
 
+        self.screen = screen
+        self.rect = self.image.get_rect()
+
+    
+        self.screen_width, self.screen_height = screen_dimensions
         self.move_offset = 10
 
-        if not starting_pos:
-            self.x, self.y = (0, 0)
-        else:
-            self.x, self.y = starting_pos
-
-
     def update(self):
-        if self.x < 0:
-            self.x = 0
-        if (self.x + self.width) > self.screen_width:
-            self.x = (self.screen_width - self.width)
-        if self.y < 0:
-            self.y = 0
-        if (self.y + self.height) > self.screen_height:
-            self.y = (self.screen_height - self.height)
+        if self.rect.x < 0:
+            self.rect.x = 0
+        if (self.rect.x + self.width) > self.screen_width:
+            self.rect.x = (self.screen_width - self.width)
+        if self.rect.y < 0:
+            self.rect.y = 0
+        if (self.rect.y + self.height) > self.screen_height:
+            self.rect.y = (self.screen_height - self.height)
         
-
-    def draw(self):
-        self.surf.fill((255,255,255))
-        self.screen.blit(self.surf, (self.x, self.y))
-        
-
     def move(self, move_index):
         """
             0 - left
@@ -44,12 +39,13 @@ class Player(pygame.sprite.Sprite):
         """
 
         if move_index == 0:
-            self.x -= self.move_offset
+            self.rect.x -= self.move_offset
         elif move_index == 1:
-            self.y -= self.move_offset
+            self.rect.y -= self.move_offset
         elif move_index == 2:
-            self.x += self.move_offset
+            self.rect.x += self.move_offset
         elif move_index == 3:
-            self.y += self.move_offset
+            self.rect.y += self.move_offset
         else:
             return -1
+
