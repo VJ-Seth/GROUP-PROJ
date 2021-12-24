@@ -15,14 +15,15 @@ class Player(pygame.sprite.Sprite):
 
         self.screen = screen
         self.rect = self.image.get_rect()
-        
-        self.rect.x, self.rect.y = (0,0)  
     
         self.screen_width, self.screen_height = screen_dimensions
         self.move_offset = 10
 
         if not starting_pos:
             self.rect.x, self.rect.y = (0, 0)
+        else:
+            self.rect.x, self.rect.y = starting_pos
+
 
     def check_boundary(self):
         if self.rect.x < 0:
