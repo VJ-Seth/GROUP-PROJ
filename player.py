@@ -15,7 +15,8 @@ class Player(pygame.sprite.Sprite):
 
         self.screen = screen
         self.rect = self.image.get_rect()
-
+        
+        self.rect.x, self.rect.y = (0,0)  
     
         self.screen_width, self.screen_height = screen_dimensions
         self.move_offset = 10
