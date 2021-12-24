@@ -19,16 +19,26 @@ pygame.init()
 
 S_WIDTH = 1350
 S_HEIGHT = 700
-screen = pygame.display.set_mode((1350, 700))
+screen = pygame.display.set_mode((S_WIDTH, S_HEIGHT))
 
-player = Player()
-player.rect.x = 0
-player.rect.y = 0
+player = Player((S_WIDTH, S_HEIGHT), screen, None)
         
 
 def draw():
     screen.fill((0,0,0))
-    screen.blit(player.surf, (100,100))
+    player.draw()
+
+def held_key_movement():
+    pressed_keys = pygame.key.get_pressed()
+
+    if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
+        player.move(0)
+    elif pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
+        player.move(1)
+    elif pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
+        player.move(2)
+    elif pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
+        player.move(3)
 
 
 def main():
@@ -40,9 +50,14 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    running = False
 
-        screen.fill((0,0,0))
-        screen.blit(player.surf, (100,100))
+        held_key_movement()
+
+        player.update()
+        draw()
 
         pygame.display.update()
 
