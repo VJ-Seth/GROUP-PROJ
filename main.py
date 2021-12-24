@@ -37,11 +37,11 @@ def held_key_movement():
 
     if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
         player.move(0)
-    elif pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
+    #elif pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
         player.move(1)
     elif pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
         player.move(2)
-    elif pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
+    #elif pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
         player.move(3)
 
 
