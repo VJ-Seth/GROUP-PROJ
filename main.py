@@ -10,9 +10,7 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
 )
-from pygame.constants import QUIT
 from player import Player
-
 
 
 pygame.init()
