@@ -20,6 +20,9 @@ class Player(pygame.sprite.Sprite):
         self.screen_width, self.screen_height = screen_dimensions
         self.move_offset = 10
 
+        if not starting_pos:
+            self.rect.x, self.rect.y = (0, 0)
+
     def check_boundary(self):
         if self.rect.x < 0:
             self.rect.x = 0
