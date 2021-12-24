@@ -1,0 +1,6 @@
+Make sure to periodically run git pull
+
+How to push
+    git add .
+    git commit -m "Message in these quotes"
+    git push (if that doesn't work, paste the command it tells you to run)
