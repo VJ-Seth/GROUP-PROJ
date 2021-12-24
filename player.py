@@ -5,7 +5,7 @@ from colors import WHITE
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, screen_dimensions, screen, starting_pos):
+    def __init__(self, screen_dimensions, starting_pos):
         super().__init__()
 
         # Could be replaced with image drawing
@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill(WHITE)
 
-        self.screen = screen
+        
         self.rect = self.image.get_rect()
     
         self.screen_width, self.screen_height = screen_dimensions
