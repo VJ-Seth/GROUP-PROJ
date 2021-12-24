@@ -29,7 +29,6 @@ all_sprites.add(player)
 def draw():
     screen.fill((0, 0, 0))
 
-    all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.update()
 
@@ -58,6 +57,8 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     running = False
+    
+        all_sprites.update()
 
         held_key_movement()
         draw()
