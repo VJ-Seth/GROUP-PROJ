@@ -11,13 +11,13 @@ S_HEIGHT = 700
 CLOCK = pygame.time.Clock()
 
 screen = pygame.display.set_mode((S_WIDTH, S_HEIGHT))
-
 all_sprites = pygame.sprite.Group()
-player = Player((S_WIDTH, S_HEIGHT), (S_WIDTH//2 - 25, S_HEIGHT//2 - 25))
-all_sprites.add(player)
 
 ground = Ground(os.path.join("assets", "ground.png"), (S_WIDTH, S_HEIGHT))
 all_sprites.add(ground)
+
+player = Player((S_WIDTH, S_HEIGHT), (ground.rect.x, ground.rect.y))
+all_sprites.add(player)
         
 
 def draw():
@@ -33,10 +33,6 @@ def held_key_movement():
         player.move(0)
     elif pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
         player.move(2)
-    
-    if player.canJump == False:
-        if pressed_keys[pygame.K_SPACE]:    
-            player.canJump = True
 
 
 def main():
@@ -51,6 +47,29 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     running = False
+                if event.key == pygame.K_SPACE:
+                    if player.isJump == False:  
+                        player.isJump = True
+                        
+        # handle player jumping
+        if player.isJump:
+            if player.jumpCount >= -10:
+                velocity = (player.jumpCount * abs(player.jumpCount)) * 0.5
+                if player.rect.y - velocity >= ground.rect.y:
+                    player.rect.y = ground.rect.y - player.rect.height
+                    player.jumpCount = 10
+                    player.isJump = False
+                else:
+                    player.rect.y -= velocity
+                    player.jumpCount -= 1
+            else: 
+                player.jumpCount = 10
+                player.isJump = False
+
+
+        ground_collision = pygame.sprite.collide_rect(player, ground)
+        player.ground_collide = ground_collision
+        
     
         all_sprites.update()
 

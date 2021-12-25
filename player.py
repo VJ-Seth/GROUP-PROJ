@@ -5,7 +5,7 @@ from colors import WHITE
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, screen_dimensions, starting_pos):
+    def __init__(self, screen_dimensions, spawn_point):
         super().__init__()
 
         # Could be replaced with image drawing
@@ -14,20 +14,20 @@ class Player(pygame.sprite.Sprite):
         self.image.fill(WHITE)
         
         self.rect = self.image.get_rect()
+        self.ground_collide = False
     
         self.screen_width, self.screen_height = screen_dimensions
         self.move_offset = 10
 
-        self.canJump = True
-        self.startMass = 1
-        self.startVelocity = 5
-        self.mass = self.startMass
-        self.velocity = self.startVelocity
+        self.isJump = False
+        self.jumpCount = 10
 
-        if not starting_pos:
+        self.spawn_point = spawn_point
+
+        if not spawn_point:
             self.rect.x, self.rect.y = (0, 0)
         else:
-            self.rect.x, self.rect.y = starting_pos
+            self.rect.x, self.rect.y = spawn_point[0], (spawn_point[1] - self.rect.height)
 
 
     def check_boundary(self):
@@ -37,42 +37,13 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = (self.screen_width - self.width)
         if self.rect.y < 0:
             self.rect.y = 0
-        if (self.rect.y + self.height) > self.screen_height:
-            self.rect.y = (self.screen_height - self.height)
 
     def update(self):
         self.check_boundary()
 
-    def jump(self):
-        if self.canJump:
-            # calculate force (F). F = 1 / 2 * mass * velocity ^ 2.
-            F =(1 / 2) * self.mass * (self.velocity ** 2)
-            
-            # change in the y co-ordinate
-            self.rect.y -= F
-            
-            # decreasing velocity while going up and become negative while coming down
-            self.velocity -= 1
-            
-            # object reached its maximum height
-            if self.velocity < 0:
-                
-                # negative sign is added to counter negative velocity
-                self.mass = -1
-    
-            # objected reaches its original state
-            if self.velocity == -6:
-    
-                # making is jump equal to false 
-                self.canJump = False
-
-                # setting original values to v and m
-                self.velocity = 5
-                self.mass = 1
-        
-        # creates time delay of 10ms
-        pygame.time.delay(10)
-   
+        # no gravity if we are hitting the ground
+        if not self.ground_collide and self.isJump:
+            self.rect.y += 3.2
         
     def move(self, move_index):
         """
