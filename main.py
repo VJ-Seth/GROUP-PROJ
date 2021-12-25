@@ -1,15 +1,5 @@
 import pygame
-import colors
-import time
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
-)
+import os
 from ground import Ground
 from player import Player
 
@@ -26,7 +16,7 @@ all_sprites = pygame.sprite.Group()
 player = Player((S_WIDTH, S_HEIGHT), (S_WIDTH//2 - 25, S_HEIGHT//2 - 25))
 all_sprites.add(player)
 
-ground = Ground("", (500, 500))
+ground = Ground(os.path.join("assets", "ground.png"), (S_WIDTH, S_HEIGHT))
 all_sprites.add(ground)
         
 
@@ -41,12 +31,12 @@ def held_key_movement():
 
     if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
         player.move(0)
-    #elif pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
-        player.move(1)
     elif pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
         player.move(2)
-    #elif pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
-        player.move(3)
+    
+    if player.canJump == False:
+        if pressed_keys[pygame.K_SPACE]:    
+            player.canJump = True
 
 
 def main():

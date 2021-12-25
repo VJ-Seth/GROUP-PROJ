@@ -1,17 +1,17 @@
 import pygame
-
 from colors import RED
 
 
 class Ground(pygame.sprite.Sprite):
     
-    def __init__(self, image_path, position):
+    def __init__(self, image_path, dimensions):
         super().__init__()
 
-        self.image = pygame.Surface((50, 50))
+        self.screen_width, self.screen_height = dimensions
+
+        self.image = pygame.image.load(image_path).convert()
         self.rect = self.image.get_rect()
         
-        self.rect.x, self.rect.y = position
+        self.rect.x, self.rect.y = (0, self.screen_height - self.rect.height)
 
-        self.image.fill(RED)
 
