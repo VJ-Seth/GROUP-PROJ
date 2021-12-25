@@ -10,6 +10,7 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
 )
+from ground import Ground
 from player import Player
 
 
@@ -22,8 +23,11 @@ CLOCK = pygame.time.Clock()
 screen = pygame.display.set_mode((S_WIDTH, S_HEIGHT))
 
 all_sprites = pygame.sprite.Group()
-player = Player((S_WIDTH, S_HEIGHT), screen, (S_WIDTH//2 - 25, S_HEIGHT//2 - 25))
+player = Player((S_WIDTH, S_HEIGHT), (S_WIDTH//2 - 25, S_HEIGHT//2 - 25))
 all_sprites.add(player)
+
+ground = Ground("", (500, 500))
+all_sprites.add(ground)
         
 
 def draw():
